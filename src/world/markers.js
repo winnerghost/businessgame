@@ -27,7 +27,7 @@ export class Markers {
   add(o) {
     if (this.items.has(o.id)) this.remove(o.id);
     const m = {
-      radius: 3.2, range: 220, beamH: 14, beamR: 0.9, scale: 1.6, enabled: true, ...o,
+      radius: 3.2, range: 220, beamH: 14, beamR: 0.9, scale: 1.0, enabled: true, ...o,
     };
     const g = new THREE.Group();
     g.position.set(m.x, 0.17, m.z);
@@ -45,7 +45,7 @@ export class Markers {
     if (m.label) {
       const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: badge(m.label, m.color), depthWrite: false, transparent: true, fog: false }));
       sp.scale.setScalar(m.scale);
-      sp.position.y = 3.3;
+      sp.position.y = 3.6;
       sp.renderOrder = 5;
       g.add(sp);
       m.sprite = sp;
@@ -81,10 +81,10 @@ export class Markers {
       m.ring.material.opacity = 0.35 + pulse * 0.45;
       m.ring.scale.setScalar(m.radius * (0.55 + pulse * 0.1));
       if (m.sprite) {
-        m.sprite.position.y = 3.3 + Math.sin(this.time * 2 + m.z) * 0.15;
-        const s = m.scale * Math.max(1, d / 40);
+        m.sprite.position.y = 3.6 + Math.sin(this.time * 2 + m.z) * 0.12;
+        const s = m.scale * Math.max(1, d / 30);
         m.sprite.scale.setScalar(Math.min(s, m.scale * 5));
-        if (m.kind === 'objective') m.sprite.position.y = 3.3 + Math.min(40, d * 0.05);
+        if (m.kind === 'objective') m.sprite.position.y = 3.6 + Math.min(40, d * 0.05);
       }
       if (m.beam) m.beam.material.opacity = (m.kind === 'objective' ? 0.7 : 0.4) * Math.min(1, Math.max(0, (d - 4) / 18));
       if (m.sprite) m.sprite.material.opacity = Math.min(1, Math.max(0.15, (d - 2) / 8));

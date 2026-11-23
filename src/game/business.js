@@ -120,7 +120,10 @@ export function openingChecklist(b) {
   for (const r of T.roles.filter((x) => x.required)) {
     items.push({ ok: b.staff.some((e) => e.role === r.id), text: `Hire at least one ${r.name}` });
   }
-  if (T.model === 'retail') items.push({ ok: Object.values(b.stock).some((q) => q > 0) || b.pending.length > 0, text: 'Initial inventory ordered' });
+  if (T.model === 'retail') {
+    const has = Object.values(b.stock).some((q) => q > 0);
+    items.push({ ok: has, pending: !has && b.pending.length > 0, text: has ? 'Opening stock on the shelves' : b.pending.length ? 'Opening stock arriving at 6:00 AM' : 'Order opening stock (Operations tab)' });
+  }
   if (b.type === 'logistics') items.push({ ok: b.trucks > 0, text: 'At least one truck in the fleet' });
   return items;
 }
@@ -259,6 +262,7 @@ export function simHour(b, hour) {
     }
     return;
   }
+  if (b.status === 'ready') { receiveOrders(b); return; }
   if (b.status !== 'open' && b.status !== 'paused') return;
   receiveOrders(b);
   const T = typeDef(b);
@@ -322,6 +326,8 @@ function retailHour(b, hour) {
     txn(tax, 'sales_tax', 'Sales tax collected', null, { silent: true });
     ctx.state.taxes.salesPayable += tax;
     if (deliveryRev) txn(-deliveryRev * 0.2, 'commission', 'Delivery app commission', b.id, { silent: true });
+    txn(-revenue * 0.026, 'commission', 'Card processing fees', b.id, { silent: true });
+    txn(-revenue * (T.category === 'Food & Beverage' || T.category === 'Nightlife' ? 0.035 : 0.015), 'maintenance', 'Consumables & packaging', b.id, { silent: true });
     if (b.upgrades.loyalty) txn(-revenue * 0.01, 'marketing', 'Loyalty program', b.id, { silent: true });
   }
   // satisfaction

@@ -22,6 +22,7 @@ export function generateUnits(layout) {
     if (b.kind === 'tower') {
       add(b, 'retail', b.w * r.float(0.35, 0.5) * r.float(12, 18), 'Ground Floor Shop');
       add(b, 'retail', Math.min(foot * 0.3, r.float(280, 650)), 'Ground Floor Retail Hall');
+      if (r.chance(0.4)) add(b, 'retail', r.float(46, 70), 'Lobby Kiosk');
       const floors = b.floors;
       add(b, 'office', foot * 0.82 * r.int(1, 2), `Floor ${r.int(3, Math.max(4, Math.floor(floors * 0.4)))} Suite`);
       add(b, 'office', foot * 0.82 * r.int(2, 4), `Floors ${Math.floor(floors * 0.5)}-${Math.floor(floors * 0.5) + 2}`);
@@ -31,6 +32,7 @@ export function generateUnits(layout) {
         const n = Math.max(1, Math.min(3, Math.round(b.w / r.float(9, 14))));
         for (let i = 0; i < n; i++) add(b, 'retail', (b.w / n) * r.float(9, 15), `Shop ${String.fromCharCode(65 + i)}`);
         if (r.chance(0.35)) add(b, 'retail', Math.min(foot * 0.7, r.float(260, 520)), 'Large Retail Floor');
+        if (r.chance(0.3)) add(b, 'retail', r.float(46, 64), 'Corner Kiosk');
       }
       if (b.district === 'northside') {
         add(b, 'building', foot * 0.85 * b.floors, 'Apartment Building', { apartments: Math.max(4, Math.round((foot * 0.8 * (b.floors - (b.storefront ? 1 : 0))) / 75)), residential: true });

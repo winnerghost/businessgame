@@ -20,7 +20,7 @@ export const SUPPLIER_TIERS = [
 export const BUSINESS_TYPES = {
   cafe: {
     id: 'cafe', name: 'Coffee Shop', icon: '☕', category: 'Food & Beverage', model: 'retail', unitTypes: ['retail'], minArea: 45,
-    permits: ['food_service', 'health_cert'], hours: [6, 20], fitoutPerM2: 420, fitoutDays: 3, commodity: 'coffee',
+    permits: ['food_service', 'health_cert'], hours: [6, 20], fitoutPerM2: 260, fitoutDays: 3, commodity: 'coffee',
     equipment: [{ tier: 'Basic', cost: 16000, quality: 40, capacity: 0.85 }, { tier: 'Professional', cost: 42000, quality: 63, capacity: 1.0 }, { tier: 'Premium', cost: 98000, quality: 86, capacity: 1.2 }],
     products: [
       { id: 'espresso', name: 'Espresso Drinks', unitCost: 0.95, refPrice: 4.75, share: 0.42, elasticity: 1.3, shelf: 30 },
@@ -28,13 +28,13 @@ export const BUSINESS_TYPES = {
       { id: 'pastry', name: 'Pastries', unitCost: 1.15, refPrice: 3.95, share: 0.22, elasticity: 1.2, shelf: 2 },
       { id: 'sandwich', name: 'Sandwiches & Salads', unitCost: 2.95, refPrice: 8.95, share: 0.14, elasticity: 1.1, shelf: 3 },
     ],
-    itemsPerCustomer: 1.55, capture: 0.06, curve: C.morning, seatsPerM2: 0.35, utilitiesPerM2: 6.5, insurance: 180, valuation: 2.8,
+    itemsPerCustomer: 1.55, capture: 0.05, curve: C.morning, seatsPerM2: 0.35, utilitiesPerM2: 6.5, insurance: 180, valuation: 2.8,
     roles: [{ id: 'barista', name: 'Barista', wage: 17, serves: 22, required: true }, { id: 'manager', name: 'Shift Manager', wage: 25, serves: 8, manager: true }],
     blurb: 'High-volume, low-ticket. Thrives on morning commuters and office workers.',
   },
   bakery: {
     id: 'bakery', name: 'Artisan Bakery', icon: '🥐', category: 'Food & Beverage', model: 'retail', unitTypes: ['retail'], minArea: 55,
-    permits: ['food_service', 'health_cert'], hours: [6, 18], fitoutPerM2: 380, fitoutDays: 3, commodity: 'food',
+    permits: ['food_service', 'health_cert'], hours: [6, 18], fitoutPerM2: 240, fitoutDays: 3, commodity: 'food',
     equipment: [{ tier: 'Basic', cost: 22000, quality: 42, capacity: 0.85 }, { tier: 'Professional', cost: 55000, quality: 64, capacity: 1.0 }, { tier: 'Premium', cost: 120000, quality: 87, capacity: 1.2 }],
     products: [
       { id: 'bread', name: 'Sourdough & Loaves', unitCost: 1.6, refPrice: 6.5, share: 0.35, elasticity: 1.1, shelf: 2 },
@@ -48,7 +48,7 @@ export const BUSINESS_TYPES = {
   },
   restaurant: {
     id: 'restaurant', name: 'Restaurant', icon: '🍽️', category: 'Food & Beverage', model: 'retail', unitTypes: ['retail'], minArea: 110,
-    permits: ['food_service', 'health_cert'], hours: [11, 23], fitoutPerM2: 650, fitoutDays: 6, commodity: 'food',
+    permits: ['food_service', 'health_cert'], hours: [11, 23], fitoutPerM2: 400, fitoutDays: 6, commodity: 'food',
     equipment: [{ tier: 'Basic', cost: 45000, quality: 42, capacity: 0.85 }, { tier: 'Professional', cost: 115000, quality: 65, capacity: 1.0 }, { tier: 'Premium', cost: 260000, quality: 88, capacity: 1.15 }],
     products: [
       { id: 'starters', name: 'Starters', unitCost: 3.2, refPrice: 12, share: 0.22, elasticity: 1.1, shelf: 2 },
@@ -62,7 +62,7 @@ export const BUSINESS_TYPES = {
   },
   bar: {
     id: 'bar', name: 'Cocktail Bar', icon: '🍸', category: 'Nightlife', model: 'retail', unitTypes: ['retail'], minArea: 80,
-    permits: ['food_service', 'liquor'], hours: [17, 2], fitoutPerM2: 560, fitoutDays: 4, commodity: 'food',
+    permits: ['food_service', 'liquor'], hours: [17, 2], fitoutPerM2: 350, fitoutDays: 4, commodity: 'food',
     equipment: [{ tier: 'Basic', cost: 28000, quality: 42, capacity: 0.85 }, { tier: 'Professional', cost: 70000, quality: 65, capacity: 1.0 }, { tier: 'Premium', cost: 165000, quality: 88, capacity: 1.2 }],
     products: [
       { id: 'beer', name: 'Draft & Craft Beer', unitCost: 1.5, refPrice: 8, share: 0.38, elasticity: 1.2, shelf: 60 },
@@ -76,7 +76,7 @@ export const BUSINESS_TYPES = {
   },
   boutique: {
     id: 'boutique', name: 'Fashion Boutique', icon: '👗', category: 'Retail', model: 'retail', unitTypes: ['retail'], minArea: 60,
-    permits: [], hours: [10, 21], fitoutPerM2: 520, fitoutDays: 4, commodity: 'fabric',
+    permits: [], hours: [10, 21], fitoutPerM2: 320, fitoutDays: 4, commodity: 'fabric',
     equipment: [{ tier: 'Basic', cost: 12000, quality: 40, capacity: 0.85 }, { tier: 'Professional', cost: 38000, quality: 63, capacity: 1.0 }, { tier: 'Premium', cost: 95000, quality: 86, capacity: 1.15 }],
     products: [
       { id: 'tops', name: 'Tops & Tees', unitCost: 14, refPrice: 32, share: 0.34, elasticity: 1.2, shelf: 365 },
@@ -90,7 +90,7 @@ export const BUSINESS_TYPES = {
   },
   grocery: {
     id: 'grocery', name: 'Grocery Market', icon: '🛒', category: 'Retail', model: 'retail', unitTypes: ['retail'], minArea: 120,
-    permits: ['food_service'], hours: [7, 23], fitoutPerM2: 340, fitoutDays: 4, commodity: 'food',
+    permits: ['food_service'], hours: [7, 23], fitoutPerM2: 210, fitoutDays: 4, commodity: 'food',
     equipment: [{ tier: 'Basic', cost: 30000, quality: 40, capacity: 0.85 }, { tier: 'Professional', cost: 75000, quality: 62, capacity: 1.0 }, { tier: 'Premium', cost: 170000, quality: 84, capacity: 1.2 }],
     products: [
       { id: 'produce', name: 'Fresh Produce', unitCost: 1.6, refPrice: 2.9, share: 0.26, elasticity: 1.5, shelf: 5 },
@@ -104,7 +104,7 @@ export const BUSINESS_TYPES = {
   },
   pharmacy: {
     id: 'pharmacy', name: 'Pharmacy', icon: '💊', category: 'Health', model: 'retail', unitTypes: ['retail'], minArea: 80,
-    permits: ['pharmacy'], hours: [8, 21], fitoutPerM2: 480, fitoutDays: 5, commodity: 'pharma',
+    permits: ['pharmacy'], hours: [8, 21], fitoutPerM2: 300, fitoutDays: 5, commodity: 'pharma',
     equipment: [{ tier: 'Basic', cost: 26000, quality: 45, capacity: 0.9 }, { tier: 'Professional', cost: 62000, quality: 66, capacity: 1.0 }, { tier: 'Premium', cost: 135000, quality: 86, capacity: 1.15 }],
     products: [
       { id: 'rx', name: 'Prescriptions', unitCost: 22, refPrice: 35, share: 0.4, elasticity: 0.4, shelf: 365 },
@@ -118,7 +118,7 @@ export const BUSINESS_TYPES = {
   },
   gym: {
     id: 'gym', name: 'Fitness Club', icon: '🏋️', category: 'Services', model: 'membership', unitTypes: ['retail', 'industrial'], minArea: 250,
-    permits: ['fitness'], hours: [5, 23], fitoutPerM2: 300, fitoutDays: 5, commodity: null,
+    permits: ['fitness'], hours: [5, 23], fitoutPerM2: 190, fitoutDays: 5, commodity: null,
     equipment: [{ tier: 'Basic', cost: 60000, quality: 40, capacity: 0.85 }, { tier: 'Professional', cost: 150000, quality: 65, capacity: 1.0 }, { tier: 'Premium', cost: 340000, quality: 88, capacity: 1.15 }],
     products: [
       { id: 'membership', name: 'Monthly Membership', unitCost: 0, refPrice: 55, share: 1, elasticity: 1.4, shelf: 0, service: true },
@@ -131,7 +131,7 @@ export const BUSINESS_TYPES = {
   },
   hotel: {
     id: 'hotel', name: 'Boutique Hotel', icon: '🏨', category: 'Hospitality', model: 'hotel', unitTypes: ['building'], minArea: 1400,
-    permits: ['hotel', 'food_service'], hours: [0, 24], fitoutPerM2: 520, fitoutDays: 12, commodity: null,
+    permits: ['hotel', 'food_service'], hours: [0, 24], fitoutPerM2: 320, fitoutDays: 12, commodity: null,
     equipment: [{ tier: '3-Star', cost: 350000, quality: 50, capacity: 1.0 }, { tier: '4-Star', cost: 900000, quality: 70, capacity: 1.0 }, { tier: '5-Star Luxury', cost: 2400000, quality: 90, capacity: 1.0 }],
     products: [{ id: 'room', name: 'Average Room Rate', unitCost: 34, refPrice: 190, share: 1, elasticity: 1.2, shelf: 0, service: true }],
     capture: 1, curve: C.retail, m2PerRoom: 34, utilitiesPerM2: 3.5, insurance: 2400, valuation: 4.5,
@@ -140,7 +140,7 @@ export const BUSINESS_TYPES = {
   },
   tech: {
     id: 'tech', name: 'Software Studio', icon: '💻', category: 'Professional Services', model: 'agency', unitTypes: ['office'], minArea: 120,
-    permits: [], hours: [9, 18], fitoutPerM2: 260, fitoutDays: 3, commodity: null,
+    permits: [], hours: [9, 18], fitoutPerM2: 160, fitoutDays: 3, commodity: null,
     equipment: [{ tier: 'Startup', cost: 18000, quality: 45, capacity: 0.9 }, { tier: 'Professional', cost: 52000, quality: 66, capacity: 1.0 }, { tier: 'Enterprise', cost: 140000, quality: 86, capacity: 1.15 }],
     products: [{ id: 'rate', name: 'Billable Rate (per hour)', unitCost: 0, refPrice: 145, share: 1, elasticity: 1.0, shelf: 0, service: true }],
     capture: 1, curve: C.retail, utilitiesPerM2: 4, insurance: 380, valuation: 4.0,
@@ -149,7 +149,7 @@ export const BUSINESS_TYPES = {
   },
   logistics: {
     id: 'logistics', name: 'Freight & Logistics', icon: '🚚', category: 'Industrial', model: 'agency', unitTypes: ['industrial'], minArea: 600,
-    permits: ['transport'], hours: [6, 22], fitoutPerM2: 90, fitoutDays: 3, commodity: 'fuel', vehicles: true,
+    permits: ['transport'], hours: [6, 22], fitoutPerM2: 60, fitoutDays: 3, commodity: 'fuel', vehicles: true,
     equipment: [{ tier: 'Basic Depot', cost: 25000, quality: 45, capacity: 0.9 }, { tier: 'Automated Depot', cost: 90000, quality: 66, capacity: 1.05 }, { tier: 'Smart Hub', cost: 240000, quality: 86, capacity: 1.2 }],
     products: [{ id: 'rate', name: 'Freight Rate (per truck-hour)', unitCost: 0, refPrice: 115, share: 1, elasticity: 1.0, shelf: 0, service: true }],
     capture: 1, curve: C.retail, utilitiesPerM2: 2, insurance: 900, valuation: 3.4,
@@ -158,7 +158,7 @@ export const BUSINESS_TYPES = {
   },
   factory: {
     id: 'factory', name: 'Manufacturing Plant', icon: '🏭', category: 'Industrial', model: 'factory', unitTypes: ['industrial'], minArea: 800,
-    permits: ['industrial'], hours: [6, 22], fitoutPerM2: 140, fitoutDays: 8, commodity: null,
+    permits: ['industrial'], hours: [6, 22], fitoutPerM2: 90, fitoutDays: 8, commodity: null,
     equipment: [{ tier: 'Manual Line', cost: 120000, quality: 45, capacity: 0.8 }, { tier: 'Semi-Automated', cost: 380000, quality: 66, capacity: 1.0 }, { tier: 'Robotic Line', cost: 950000, quality: 88, capacity: 1.5 }],
     products: [],
     capture: 1, curve: C.retail, utilitiesPerM2: 5, insurance: 1600, valuation: 3.0,

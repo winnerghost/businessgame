@@ -10,7 +10,7 @@ import { portfolioValue } from './stocks.js';
 
 export const LOAN_PRODUCTS = {
   personal: { id: 'personal', name: 'Personal Loan', min: 2000, max: 25000, terms: [12, 24, 36, 60], spread: 0.085, needsCompany: false, desc: 'Unsecured. Fast approval, high rate. Good for bootstrapping.' },
-  micro: { id: 'micro', name: 'Small Business Microloan', min: 5000, max: 75000, terms: [24, 36, 60, 72], spread: 0.04, needsCompany: true, desc: 'Community-bank program for new ventures. Needs a registered company.' },
+  micro: { id: 'micro', name: 'Small Business Microloan', min: 5000, max: 90000, terms: [24, 36, 60, 72], spread: 0.04, needsCompany: true, desc: 'Community-bank program for new ventures. Needs a registered company.' },
   sba: { id: 'sba', name: 'SBA-Guaranteed Term Loan', min: 50000, max: 2500000, terms: [60, 84, 120], spread: 0.0275, needsCompany: true, needsHistory: 30, desc: 'Government-backed. Low rate, long term. Needs 30+ days of trading history.' },
   equipment: { id: 'equipment', name: 'Equipment Financing', min: 10000, max: 1500000, terms: [36, 48, 60], spread: 0.035, needsCompany: true, desc: 'Secured by business equipment. Sized to your existing asset base.' },
   mortgage: { id: 'mortgage', name: 'Commercial Mortgage', min: 50000, max: 80000000, terms: [180, 240, 300], spread: 0.019, needsCompany: false, secured: true, desc: 'Up to 75% of a property\'s value. Taken when buying a property.' },
@@ -47,7 +47,7 @@ export function loanLimit(productId) {
   const opProfit = s.businesses.reduce((a, b) => a + trailing(b, 30).profit, 0);
   const nw = netWorth();
   if (productId === 'personal') max = clamp(4000 + (score - 580) * 90, 2000, P.max);
-  if (productId === 'micro') max = clamp(20000 + (score - 620) * 350, 5000, P.max);
+  if (productId === 'micro') max = clamp(32000 + (score - 620) * 600, 5000, P.max);
   if (productId === 'sba') {
     const days = s.businesses.filter((b) => b.opened).map((b) => now().day - b.opened);
     if (!days.length || Math.max(...days) < P.needsHistory) reasons.push(`Needs a business trading for ${P.needsHistory}+ days.`);

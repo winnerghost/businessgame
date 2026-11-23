@@ -58,7 +58,7 @@ export function newState(seed = 20261123) {
     created: Date.now(),
     clock: { min: 8 * 60 },
     speed: 1,
-    cash: 18500,
+    cash: 25000,
     player: { x: 0, z: 0, yaw: 0, inCar: false },
     car: { id: 'civara', color: 0x6f7f8c, x: 0, z: 0, yaw: 0 },
     garage: ['civara'],
