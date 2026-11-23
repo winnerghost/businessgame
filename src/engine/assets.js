@@ -41,12 +41,16 @@ export async function loadAssets(onProgress = () => {}) {
       if (j.kind === 'img') {
         assets.images[j.key] = await loadImage(j.url);
       } else if (j.kind === 'hdr') {
-        const t = await rgbe.loadAsync(j.url);
-        t.mapping = THREE.EquirectangularReflectionMapping;
-        t.minFilter = THREE.LinearFilter;
-        t.magFilter = THREE.LinearFilter;
-        t.generateMipmaps = false;
-        (assets.sky[j.key] ||= {}).hdr = t;
+        try {
+          const t = await rgbe.loadAsync(j.url);
+          t.mapping = THREE.EquirectangularReflectionMapping;
+          t.minFilter = THREE.LinearFilter;
+          t.magFilter = THREE.LinearFilter;
+          t.generateMipmaps = false;
+          (assets.sky[j.key] ||= {}).hdr = t;
+        } catch (e) {
+          console.warn('[assets] HDR unavailable, using LDR sky for lighting:', j.url);
+        }
       } else if (j.kind === 'json') {
         assets.skyInfo = await (await fetch(j.url)).json();
       }

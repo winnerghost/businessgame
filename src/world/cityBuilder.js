@@ -52,7 +52,7 @@ export class CityBuilder {
     }
     const sf = storefrontTextures();
     M.store = new THREE.MeshStandardMaterial({ map: sf.map, emissiveMap: sf.emissive, emissive: 0xffffff, emissiveIntensity: 0.25, roughness: 0.18, metalness: 0.35, vertexColors: true, envMapIntensity: 1.2 });
-    g.registerNightMaterial(M.store, 0.25, 2.0);
+    g.registerNightMaterial(M.store, 0.25, 1.15);
     M.roof = real ? pbr('roofgravel', { vertexColors: true }) : new THREE.MeshStandardMaterial({ map: roofTexture(), roughness: 0.95, vertexColors: true });
     M.rooftiles = real ? pbr('rooftiles', { vertexColors: true, normalStrength: 1.4 }) : new THREE.MeshStandardMaterial({ roughness: 0.8, vertexColors: true });
     M.solid = real ? pbr('plaster', { vertexColors: true, normalStrength: 0.6 }) : new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.78 });

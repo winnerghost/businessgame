@@ -86,7 +86,7 @@ export class Markers {
         m.sprite.scale.setScalar(Math.min(s, m.scale * 5));
         if (m.kind === 'objective') m.sprite.position.y = 3.6 + Math.min(40, d * 0.05);
       }
-      if (m.beam) m.beam.material.opacity = (m.kind === 'objective' ? 0.7 : 0.4) * Math.min(1, Math.max(0, (d - 4) / 18));
+      if (m.beam) m.beam.material.opacity = (m.kind === 'objective' ? 0.55 : 0.4) * Math.min(1, Math.max(0, (d - 6) / 30));
       if (m.sprite) m.sprite.material.opacity = Math.min(1, Math.max(0.15, (d - 2) / 8));
       if (m.onInteract && d < m.radius && d < bestD) { best = m; bestD = d; }
     }

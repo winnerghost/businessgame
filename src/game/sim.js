@@ -27,10 +27,10 @@ export function newGame(seed = 20261123) {
   refreshTenders();
   const L = ctx.layout;
   const home = L.buildingById[L.landmarks.home.buildingId];
-  s.player.x = home.door.x; s.player.z = home.door.z - 2; s.player.yaw = Math.PI;
+  s.player.x = home.door.x; s.player.z = home.door.z + 0.6; s.player.yaw = Math.PI;
   s.car.x = home.door.x + 5; s.car.z = home.door.z - 8.6; s.car.yaw = Math.PI / 2;
-  message('Eleanor Vance', 'Welcome to Port Meridian', `I'm Eleanor — I built and sold three companies in this city, and your aunt asked me to keep an eye on you.\n\nYou have $25,000 in savings, a beat-up hatchback and an apartment in Northside. That's more than I started with.\n\nPress TAB to open your tablet: it runs your whole operation — businesses, staff, finances, property, the stock market and your missions. Press M for the city map.\n\nYour first job is simple: earn some cash. The courier depot at the harbor always needs drivers.`);
   startMissions();
+  message('Eleanor Vance', 'Welcome to Port Meridian', `I'm Eleanor — I built and sold three companies in this city, and your aunt asked me to keep an eye on you.\n\nYou have $25,000 in savings, a beat-up hatchback and an apartment in Northside. That's more than I started with.\n\nPress TAB to open your tablet: it runs your whole operation — businesses, staff, finances, property, the stock market and your missions. Press M for the city map.\n\nYour first job is simple: earn some cash. The courier depot at the harbor always needs drivers.`);
   return s;
 }
 

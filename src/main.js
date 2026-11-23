@@ -83,6 +83,18 @@ async function boot() {
   await frame();
   $('loading').classList.add('hidden');
   showTitle();
+  // photo/debug mode: ?autostart=1&time=18.5&rain=0.8&cloud=0.9&cam=x,y,z&look=x,y,z
+  const P = new URLSearchParams(location.search);
+  if (P.get('autostart')) {
+    ctx.audio.init();
+    startNew(false);
+    if (P.get('time')) ctx.state.clock.min = Math.round(parseFloat(P.get('time')) * 60);
+    const w = ctx.state.economy.weather;
+    if (P.get('rain')) { w.rain = parseFloat(P.get('rain')); w.target = { rain: w.rain, cloud: Math.max(w.rain, 0.8), fog: 0.1 }; w.next = 1e9; }
+    if (P.get('cloud')) { w.cloud = parseFloat(P.get('cloud')); w.target = { ...(w.target || { rain: 0, fog: 0 }), cloud: w.cloud }; w.next = 1e9; }
+    if (P.get('cam')) ctx.photoCam = { pos: P.get('cam').split(',').map(Number), look: (P.get('look') || '0,20,0').split(',').map(Number) };
+    if (P.get('speed')) setSpeed(+P.get('speed'));
+  }
   requestAnimationFrame(loop);
 }
 
@@ -115,13 +127,13 @@ function hideTitle() {
   ctx.started = true;
 }
 
-function startNew() {
+function startNew(openInbox = true) {
   newGame();
   placeFromState();
   hideTitle();
   syncWorld();
   ctx.hud.renderTicker();
-  setTimeout(() => ctx.tablet.open('messages'), 600);
+  if (openInbox) setTimeout(() => ctx.tablet.open('messages'), 600);
 }
 
 function loadSlot(slot) {
@@ -198,7 +210,7 @@ function syncObjectives() {
   M.remove('objective');
   if (!t) return;
   const color = kind === 'gig' ? '#ff6b6b' : kind === 'wp' ? '#b794f4' : '#ffd54a';
-  M.add({ id: 'objective', kind: 'objective', x: t.x, z: t.z, label: kind === 'gig' ? (g.stage === 'pickup' ? 'P' : 'D') : kind === 'wp' ? '◆' : '!', color, range: 5000, beamH: 120, beamR: 1.4, scale: 1.3, radius: kind === 'wp' ? 8 : 6 });
+  M.add({ id: 'objective', kind: 'objective', x: t.x, z: t.z, label: kind === 'gig' ? (g.stage === 'pickup' ? 'P' : 'D') : kind === 'wp' ? '◆' : '!', color, range: 5000, beamH: 120, beamR: 0.7, scale: 1.3, radius: kind === 'wp' ? 8 : 6 });
 }
 
 function wireEvents() {
@@ -358,6 +370,7 @@ function loop() {
   const dist = districtAt(focus.x, focus.z);
   ctx.audio.update(dt, { driving: inCar, rpm: clamp(Math.abs(ctx.vehicle.speed) / (ctx.vehicle.spec?.top || 40), 0, 1), throttle: inCar && ctx.input.down('KeyW') ? 1 : 0, rain: w.rain, urban: ['downtown', 'midtown'].includes(dist) ? 1 : 0.5 });
   syncPlayerToState();
+  if (ctx.photoCam) { gfx.camera.position.set(...ctx.photoCam.pos); gfx.camera.lookAt(...ctx.photoCam.look); }
   gfx.render();
   ctx.input.endFrame();
 }

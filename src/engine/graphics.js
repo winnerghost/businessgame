@@ -166,14 +166,16 @@ export class Graphics {
 
     // HDR copy for image-based lighting
     this.envScene = new THREE.Scene();
-    const hdr = SKIES.map((s) => assets.sky[s]?.hdr || placeholder);
+    const haveHdr = SKIES.every((s) => assets.sky[s]?.hdr);
+    const env = haveHdr ? SKIES.map((s) => assets.sky[s].hdr) : texs.map((t) => t || placeholder);
+    const envGain = haveHdr ? SKIES.map((s) => ENV_GAIN[s]) : SKIES.map((s, i) => [this.skyGain.x, this.skyGain.y, this.skyGain.z, this.skyGain.w][i] * 0.9);
     this.envMat = new THREE.ShaderMaterial({
       uniforms: {
-        t0: { value: hdr[0] }, t1: { value: hdr[1] }, t2: { value: hdr[2] }, t3: { value: hdr[3] },
-        w: this.skyMat.uniforms.w, rot: this.skyMat.uniforms.rot, gain: { value: new THREE.Vector4(...SKIES.map((s) => ENV_GAIN[s])) },
+        t0: { value: env[0] }, t1: { value: env[1] }, t2: { value: env[2] }, t3: { value: env[3] },
+        w: this.skyMat.uniforms.w, rot: this.skyMat.uniforms.rot, gain: { value: new THREE.Vector4(...envGain) },
         fogColor: { value: new THREE.Color() }, haze: { value: 0 }, flash: this.skyMat.uniforms.flash,
       },
-      vertexShader: envVert, fragmentShader: skyFrag(true), side: THREE.BackSide, depthWrite: false,
+      vertexShader: envVert, fragmentShader: skyFrag(haveHdr), side: THREE.BackSide, depthWrite: false,
     });
     this.envScene.add(new THREE.Mesh(new THREE.SphereGeometry(100, 32, 16), this.envMat));
     this.pmrem = new THREE.PMREMGenerator(this.renderer);

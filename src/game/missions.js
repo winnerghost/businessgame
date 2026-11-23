@@ -20,7 +20,7 @@ const totalRevenue = () => S().businesses.reduce((a, b) => a + (b.life.revenue |
 export const MISSIONS = [
   {
     id: 'm1', title: 'Welcome to Port Meridian', giver: 'Eleanor Vance',
-    brief: 'You arrived with a few thousand dollars and a big idea. First, some quick cash: SwiftRoute Courier Depot down at the harbor always needs drivers. Grab your car and complete a delivery.',
+    brief: 'You arrived with modest savings and a big idea. First, some quick cash: SwiftRoute Courier Depot down at the harbor always needs drivers. Grab your car and complete a delivery.',
     objectives: [
       { text: 'Get in your car (press F near it)', check: () => S().player.inCar || (S().missions.counters.deliveries || 0) > 0, target: () => ({ x: S().car.x, z: S().car.z, label: 'Your car' }) },
       { text: 'Complete a courier gig at SwiftRoute Depot', check: () => (S().missions.counters.deliveries || 0) >= 1, target: () => (S().gig ? null : lm('depot')) },

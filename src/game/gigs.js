@@ -32,7 +32,7 @@ export function gigOffers() {
     const drop = randomDoor(null, 280, pickup);
     const dist = Math.hypot(pickup.x - drop.x, pickup.z - drop.z) * 1.3;
     const time = Math.round(dist / 11 + 40);
-    const pay = Math.round((90 + dist * 0.42) * cargo.mult * (ctx.state.economy?.priceLevel ?? 1) / 5) * 5;
+    const pay = Math.round((35 + dist * 0.17) * cargo.mult * (ctx.state.economy?.priceLevel ?? 1) / 5) * 5;
     offers.push({ id: uid('gig'), kind: 'courier', cargo: cargo.name, fragile: cargo.fragile, van: !!cargo.van, pickup, drop, dist, time, pay });
   }
   return offers;
