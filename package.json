@@ -1,0 +1,18 @@
+{
+  "name": "venture-port-meridian",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Venture: Port Meridian — an open-world 3D business empire simulator that runs in the browser.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "0.170.0"
+  },
+  "devDependencies": {
+    "vite": "5.4.11"
+  }
+}

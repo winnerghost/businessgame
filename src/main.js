@@ -1,0 +1,54 @@
+import * as THREE from 'three';
+import { Graphics } from './engine/graphics.js';
+import { buildLayout, LANDMARKS } from './world/layout.js';
+import { CityBuilder } from './world/cityBuilder.js';
+import { Collision } from './world/collision.js';
+import { Traffic } from './world/traffic.js';
+import { Pedestrians } from './world/pedestrians.js';
+import { Markers } from './world/markers.js';
+import { Player } from './player/player.js';
+import { PlayerVehicle } from './player/vehicle.js';
+import { CameraRig } from './player/cameraRig.js';
+import { Input } from './core/input.js';
+import { ctx } from './core/ctx.js';
+import { loadAssets } from './engine/assets.js';
+await loadAssets((p, l) => { window.__load = p; });
+const gfx = new Graphics(document.getElementById('app'), 'high');
+ctx.gfx = gfx;
+const L = buildLayout();
+const col = new Collision(); ctx.collision = col;
+const city = new CityBuilder(L, gfx, col);
+gfx.scene.add(city.build());
+ctx.input = new Input(gfx.renderer.domElement);
+ctx.camRig = new CameraRig(gfx.camera, ctx);
+ctx.player = new Player(ctx); gfx.scene.add(ctx.player.root);
+const home = L.buildingById[L.landmarks.home.buildingId];
+ctx.player.place(home.door.x, home.door.z - 1, Math.PI);
+ctx.vehicle = new PlayerVehicle(ctx); ctx.vehicle.setModel('civara'); gfx.scene.add(ctx.vehicle.root);
+ctx.vehicle.place(home.door.x + 4, home.door.z - 7.5, Math.PI/2);
+ctx.traffic = new Traffic(ctx, L, city, 58);
+ctx.peds = new Pedestrians(ctx, L, city.group, 190);
+ctx.markers = new Markers(ctx, gfx.scene);
+for (const [id, lm] of Object.entries(L.landmarks)) { const b = L.buildingById[lm.buildingId]; ctx.markers.add({ id, x: b.door.x, z: b.door.z, label: lm.badge, color: lm.color, onInteract: ()=>{} }); }
+const params = new URLSearchParams(location.search);
+const t = parseFloat(params.get('t') || '10');
+ctx.camRig.yaw = parseFloat(params.get('yaw') || '0.5');
+let last = performance.now(); let frames = 0;
+function loop() {
+  const now = performance.now(); const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  ctx.input.keys.add('KeyW');
+  ctx.player.update(dt, ctx.input, ctx.camRig, true);
+  ctx.vehicle.update(dt, ctx.input, false);
+  ctx.camRig.update(dt, ctx.input, ctx.player.pos, {});
+  if (params.get('cam')) { const c = params.get('cam').split(',').map(Number), l = (params.get('look')||'0,30,0').split(',').map(Number); gfx.camera.position.set(...c); gfx.camera.lookAt(...l); }
+  const camF = new THREE.Vector3(); gfx.camera.getWorldDirection(camF);
+  ctx.traffic.update(dt, ctx.player.pos, camF);
+  ctx.peds.update(dt, ctx.player.pos, gfx.night);
+  ctx.markers.update(dt, ctx.player.pos);
+  gfx.update(dt, t, { rain: parseFloat(params.get('rain') || '0'), cloud: parseFloat(params.get('cloud') || '0.2') }, ctx.player.pos);
+  city.update(dt, now / 1000);
+  gfx.render();
+  window.__frames = ++frames;
+  requestAnimationFrame(loop);
+}
+loop();
